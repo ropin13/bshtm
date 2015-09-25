@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+
+  <table>
+    <tr>
+      <td width="50%">lyric<br/><textarea id="lyricText">&nbsp我學了|三個月的|吉他|哈哈哈哈哈|&nbsp只因為|你說你想聽|&nbsp有吉他的|流行歌曲^
+好不容|易學會歡樂|年華|阿|阿|阿|阿|四大和弦|給我力|量^
+|dm|7的聲音聽|起來好像 好像|我們隔著吉他|誇張擁抱著對|方^
+1|234|56|秒^
+我唱這|一首有吉他的|流行歌 像流行|感冒陪伴 直到|你睡了^
+月亮和|星星都會|向你靠近 是真的| |是真的||^
+我彈著|一首有吉他的|流行歌 裡面有|流星 真的可以|許願呢^
+萬一你聽見|的話 |快點閉上眼睛 |許六個願望^
+練吉他|地球繞著我|們轉|轉轉轉轉轉|頭暈目|眩的時候|聽我的so|lo^
+爬著音|階 一步步步|前往|阿|阿|阿|阿| 屬於我們的 |歡樂年|華^
+|d|m|7的聲音聽|起來好像 好像|我們隔著吉他 |誇張擁抱著對|方^
+1|234|56|7 |多一|秒^
+我唱這|一首有吉他的|流行歌 像流行|感冒陪伴 直到|你睡了^
+月亮和|星星都會|向你靠近 是真的||是真的||^
+我彈著 |一首有吉他的|流行歌 裡面有|流星 真的可以|許願呢^
+在這之前先跟|著我的的|的的的的 的的的|的的的的^
+的的的的的|的的的的|的的的的的的的||||^</textarea></td>
+      <td rowspan='2'><div id="song"></td>
+    </tr>
+    <tr>
+      <td>chord<br/><textarea id="chordText">C|Am7|Dm7|G|C|Am7|Dm7|G^
+C|Am7|Dm7|Aadd13+|A7|A7sus4|A7|Dm7|G11|C^
+C|Cadd9/13|Am7|Am6/#G|G11|#Fm7-5|Fadd9^
+C/E|Dm7|E7^
+Dm7|G7|CM7|Am7^
+Dm7|E7+9|Gm7|#Gm7|Gm7|C7^
+Dm7|E7+9|Am7|D7^
+Dm7|Am7|Fm|G11^
+C|Am7|Dm7|G|C|Am7|Dm7|G^
+C|Am7|Dm7|Aadd13+|A7|A7sus4|A7|Dm7|G11|C^
+C|Cadd9/13|Am7|Am6/#G|G11|#Fm7-5|Fadd9^
+C/E|Dm7|E7|G11|E7^
+Dm7|G7|CM7|Am7^
+Dm7|E7+9|Gm7|#Gm7|Gm7|C7^
+Dm7|E7+9|Am7|D7^
+Dm7|G11|G7|CM7^
+Am7|Dm7|E7+9|Gm7|#Gm7|Gm7|C7^</textarea></td>
+    </tr>
+  </table>
+    
+  </div>
+  
+<script id="jsbin-javascript">
+var songLyric =new Array(0);
+var songChord = new Array(0);
+$("#lyricText").change(function(){
+  songLyric = new Array(0);
+  var lyText = $(this).val();
+  var lytr = lyText.split("^");
+  for(var lineIdx=0;lineIdx<lytr.length;lineIdx++){
+    songLyric.push(lytr[lineIdx].split("|"));
+  }
+  paintSheet();
+});
+$("#chordText").change(function(){
+  songChord =new Array(0);
+  var chText = $(this).val();
+  var chtr = chText.split("^");
+  for(var lineIdx=0;lineIdx<chtr.length;lineIdx++){
+    songChord.push(chtr[lineIdx].split("|"));
+  }
+  paintSheet();
+});
+var paintSheet = function(){
+  var sheet = "";
+  
+  // line
+  for(var lineIdx=0;lineIdx<songLyric.length;lineIdx++){
+    // chord
+    var trChord = "";
+    if (lineIdx<=songChord.length){
+      trChord = trChord +"<tr>";
+      for(var idx=0;idx<songChord[lineIdx].length;idx++){
+        trChord = trChord+"<td>"+songChord[lineIdx][idx]+"</td>";
+      }
+      trChord = trChord +"</tr>";
+    }
+    
+    //lyric
+    var trLyric = "";
+    if (lineIdx<=songLyric.length){
+      trLyric = trLyric +"<tr>";
+      for(var idx2=0;idx2<songLyric[lineIdx].length;idx2++){
+        trLyric = trLyric+"<td>"+songLyric[lineIdx][idx2]+"</td>";
+      }
+      trLyric = trLyric +"</tr>";
+    }
+    
+    //to sheet
+    sheet = sheet+ "<table>"+trChord+trLyric+"</table>";
+  }
+  
+  console.info("sheet paint");
+  //paint
+  $("#song").html(sheet);
+};
+var init = function(){
+  
+  songLyric = new Array(0);
+  var lyText = $("#lyricText").val();
+  var lytr = lyText.split("^");
+  for(var lineIdx=0;lineIdx<lytr.length;lineIdx++){
+    songLyric.push(lytr[lineIdx].split("|"));
+  }
+  
+  songChord =new Array(0);
+  var chText = $("#chordText").val();
+  var chtr = chText.split("^");
+  for(var lineIdx=0;lineIdx<chtr.length;lineIdx++){
+    songChord.push(chtr[lineIdx].split("|"));
+  }
+  paintSheet();
+  
+};
+init();
+</script>
+
+
+
+<script id="jsbin-source-javascript" type="text/javascript">
+var songLyric =new Array(0);
+var songChord = new Array(0);
+$("#lyricText").change(function(){
+  songLyric = new Array(0);
+  var lyText = $(this).val();
+  var lytr = lyText.split("^");
+  for(var lineIdx=0;lineIdx<lytr.length;lineIdx++){
+    songLyric.push(lytr[lineIdx].split("|"));
+  }
+  paintSheet();
+});
+$("#chordText").change(function(){
+  songChord =new Array(0);
+  var chText = $(this).val();
+  var chtr = chText.split("^");
+  for(var lineIdx=0;lineIdx<chtr.length;lineIdx++){
+    songChord.push(chtr[lineIdx].split("|"));
+  }
+  paintSheet();
+});
+var paintSheet = function(){
+  var sheet = "";
+  
+  // line
+  for(var lineIdx=0;lineIdx<songLyric.length;lineIdx++){
+    // chord
+    var trChord = "";
+    if (lineIdx<=songChord.length){
+      trChord = trChord +"<tr>";
+      for(var idx=0;idx<songChord[lineIdx].length;idx++){
+        trChord = trChord+"<td>"+songChord[lineIdx][idx]+"</td>";
+      }
+      trChord = trChord +"</tr>";
+    }
+    
+    //lyric
+    var trLyric = "";
+    if (lineIdx<=songLyric.length){
+      trLyric = trLyric +"<tr>";
+      for(var idx2=0;idx2<songLyric[lineIdx].length;idx2++){
+        trLyric = trLyric+"<td>"+songLyric[lineIdx][idx2]+"</td>";
+      }
+      trLyric = trLyric +"</tr>";
+    }
+    
+    //to sheet
+    sheet = sheet+ "<table>"+trChord+trLyric+"</table>";
+  }
+  
+  console.info("sheet paint");
+  //paint
+  $("#song").html(sheet);
+};
+var init = function(){
+  
+  songLyric = new Array(0);
+  var lyText = $("#lyricText").val();
+  var lytr = lyText.split("^");
+  for(var lineIdx=0;lineIdx<lytr.length;lineIdx++){
+    songLyric.push(lytr[lineIdx].split("|"));
+  }
+  
+  songChord =new Array(0);
+  var chText = $("#chordText").val();
+  var chtr = chText.split("^");
+  for(var lineIdx=0;lineIdx<chtr.length;lineIdx++){
+    songChord.push(chtr[lineIdx].split("|"));
+  }
+  paintSheet();
+  
+};
+init();</script></body>
+</html>
